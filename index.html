@@ -97,6 +97,19 @@
     text-transform:uppercase;letter-spacing:.08em}
   .separador::before,.separador::after{content:'';flex:1;height:1px;background:var(--line)}
   .vacio{border:2px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--muted);font-size:14px}
+  /* Calendario de pagos */
+  .calendario{background:linear-gradient(135deg,rgba(255,90,31,.10),rgba(255,176,32,.06));border:1px solid rgba(255,176,32,.35);
+    border-radius:14px;padding:16px;margin-bottom:16px}
+  .calendario .cal-tit{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin-bottom:14px}
+  .cal-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;position:relative}
+  .cal-step{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .cal-step .num{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));color:#111;font-weight:800;font-size:13px;margin-bottom:6px}
+  .cal-step .cuando{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .cal-step .dia{font-size:18px;font-weight:800;color:var(--txt);margin:2px 0}
+  .cal-step .monto{font-size:13px;color:var(--accent2);font-weight:700}
+  .cal-nota{font-size:12.5px;color:#ffd58a;margin-top:12px;line-height:1.5}
+  .pago .fecha{font-size:12px;color:var(--txt);background:rgba(255,176,32,.12);border-radius:8px;padding:4px 8px;align-self:flex-start}
 
   /* Datos de pago Nequi */
   .nequi{background:linear-gradient(135deg,rgba(218,0,129,.18),rgba(32,0,60,.35));border:1px solid rgba(218,0,129,.5);
@@ -172,7 +185,7 @@
   footer{text-align:center;color:var(--muted);font-size:12px;margin-top:20px}
   .loader{display:inline-block;width:16px;height:16px;border:2px solid #111;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:8px}
   @keyframes spin{to{transform:rotate(360deg)}}
-  @media(max-width:600px){.grid,.opts,.grid3,.mangas{grid-template-columns:1fr}.kpi div{font-size:15px}}
+  @media(max-width:600px){.grid,.opts,.grid3,.mangas,.cal-steps{grid-template-columns:1fr}.kpi div{font-size:15px}}
 </style>
 </head>
 <body>
@@ -231,6 +244,7 @@
     <div class="card">
       <h2><span class="n">4</span>¿Qué pago vas a hacer?</h2>
       <p class="sub" id="subPagos">Toca el pago que corresponde al comprobante que vas a adjuntar.</p>
+      <div class="calendario" id="calendario"></div>
       <div class="pagos" id="pagos"></div>
       <div class="resumen-sel" id="resumenSel"></div>
     </div>
@@ -274,6 +288,7 @@
           <li><b>Garantías y reclamos.</b> Cualquier reclamo por garantía, defectos de fabricación o diferencias en tallas debe gestionarse directamente con Suarez Clothing, según sus políticas.</li>
           <li><b>Precios y cantidad mínima.</b> Los precios publicados incluyen IVA y se mantienen solo si se alcanza un pedido mínimo de <span class="minimo">50</span> unidades de cada prenda. Si no se alcanza, los precios pueden variar.</li>
           <li><b>Plan de cuotas.</b> Uniforme completo: $220.000 + $175.000 + $175.000. Jersey + Medias: 50% ($127.500) + 25% ($63.750) + 25% ($63.750).</li>
+            <li><b>Fechas de pago.</b> Primer pago hasta el <b>30 de noviembre</b>, segundo pago hasta el <b>15 de diciembre</b> y tercer pago hasta el <b>15 de enero</b>. El pago total de una sola vez debe hacerse hasta el <b>30 de noviembre</b>.</li>
           <li><b>Jersey manga larga.</b> Tiene un valor adicional de <span class="extraTxt">$20.000</span>. Si pagas en cuotas, este valor se suma a la primera cuota; si haces pago total, se incluye en ese pago.</li>
           <li><b>Formas de pago.</b> Los pagos se hacen por Nequi o con la llave <b>3012648660</b>. Puedes pagar en cuotas o hacer un pago total de una sola vez. El uniforme se entrega solo cuando el valor total esté pagado.</li>
           <li><b>Tallas y opciones.</b> La talla, el tipo de manga y la opción de compra son responsabilidad de quien compra. Una vez enviado el pedido a producción, no se aceptan cambios.</li>
@@ -302,14 +317,14 @@
   </section>
 
   <footer>Cinco Quince 515 · Uniforme oficial por Suarez Clothing<br>
-  Pagos por Nequi / llave 3012648660 · Precios sujetos a un pedido mínimo de <span class="minimo">50</span> unidades por prenda.</footer>
+  Pagos por Nequi / llave 3012648660 · Fechas: 30 nov, 15 dic y 15 ene<br>Precios sujetos a un pedido mínimo de <span class="minimo">50</span> unidades por prenda.</footer>
 </div>
 
 <script>
 /* ====== CONFIGURA AQUÍ LA URL DE TU APPS SCRIPT (termina en /exec) ====== */
 const API_URL = 'PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT';
 
-const TYC_VERSION = 'v5-2026-11';
+const TYC_VERSION = 'v6-2026-11';
 let CFG = {
   opciones:{
     COMPLETO:{nombre:'Uniforme completo',detalle:'Jersey Performance + Badana Pro + Medias',
@@ -323,6 +338,14 @@ let CFG = {
   tallas:['XS','S','M','L','XL','XXL'], tallasMedias:['S-M','L-XL'],
   mangaLargaExtra:20000, maxMb:5, minimo:50
 };
+/* ====== FECHAS LÍMITE DE PAGO ====== */
+const FECHAS_PAGO = [
+  { corta:'30 nov', larga:'30 de noviembre' },
+  { corta:'15 dic', larga:'15 de diciembre' },
+  { corta:'15 ene', larga:'15 de enero' }
+];
+const FECHA_TOTAL = FECHAS_PAGO[0];
+const fechaDe = n => n === 'TOTAL' ? FECHA_TOTAL : FECHAS_PAGO[n-1];
 const ICONO_GENERO = { Hombre:'♂', Mujer:'♀' };
 
 const $ = id => document.getElementById(id);
@@ -354,7 +377,7 @@ function renderOpciones(){
       <ul>${(o.prendas||[]).map(p=>`<li><span>${p[0]}</span><span>${cop(p[1])}</span></li>`).join('')}</ul>
       ${desc ? `<div class="old">${cop(o.precioLista)}</div>` : ''}
       <div class="price">${cop(o.total)}${desc ? `<span class="desc">Ahorras ${cop(o.precioLista-o.total)}</span>` : ''}</div>
-      <div class="plan">Pago total de ${cop(o.total)} o ${o.pagos.length} cuotas: ${o.pagos.map(cop).join(' + ')}</div>
+      <div class="plan">Pago total de ${cop(o.total)} hasta el ${FECHA_TOTAL.corta}, o ${o.pagos.length} cuotas: ${o.pagos.map((v,i)=>cop(v)+' ('+FECHAS_PAGO[i].corta+')').join(' + ')}</div>
     </div>`;
   }).join('');
   document.querySelectorAll('.opt').forEach(el => el.onclick = () => {
@@ -413,10 +436,27 @@ function renderTallas(){
   $('tallaMedias').innerHTML = opts(CFG.tallasMedias || ['S-M','L-XL']);
 }
 
+/* ---------- Calendario ---------- */
+function renderCalendario(){
+  const p = plan(state.opcion, state.manga);
+  const pct = ['50%','25%','25%'];
+  $('calendario').innerHTML = `
+    <div class="cal-tit">📅 Calendario de pagos</div>
+    <div class="cal-steps">
+      ${FECHAS_PAGO.map((f,i) => `<div class="cal-step">
+        <div class="num">${i+1}</div>
+        <div class="cuando">${i===0?'Primer':i===1?'Segundo':'Tercer'} pago · hasta el</div>
+        <div class="dia">${f.larga}</div>
+        <div class="monto">${p ? cop(p.pagos[i]) : (state.opcion ? '' : 'Cuota '+(i+1))}</div>
+      </div>`).join('')}
+    </div>
+    <div class="cal-nota">💡 Si prefieres el <b>pago total</b>${p?' ('+cop(p.total)+')':''}, hazlo a más tardar el <b>${FECHA_TOTAL.larga}</b>.</div>`;
+}
 /* ---------- Pagos ---------- */
 function renderPagos(){
   const o = CFG.opciones[state.opcion];
   const p = plan(state.opcion, state.manga);
+  renderCalendario();
   $('resumenSel').style.display = 'none';
   if(!o){
     $('pagos').innerHTML = '<div class="vacio" style="grid-column:1/-1">👆 Primero elige en el paso 2 qué quieres comprar y aquí aparecerán tus opciones de pago.</div>';
@@ -435,7 +475,7 @@ function renderPagos(){
   if (!yaInicioCuotas) {
     html += `<div class="sel-card pago total ${pagoTotalHecho?'done':''}" data-n="TOTAL" role="radio" tabindex="0">
       <div class="izq">${pagoTotalHecho?'':'<span class="dot"></span>'}
-        <div><span class="lbl">Pago total · una sola vez</span><small>Pagas todo el uniforme en un solo pago${p.extra?' (incluye manga larga)':''}</small></div></div>
+        <div><span class="lbl">Pago total · una sola vez</span><small>Pagas todo el uniforme en un solo pago${p.extra?' (incluye manga larga)':''}</small><small style="color:var(--accent2);font-weight:600">📅 Hasta el ${FECHA_TOTAL.larga}</small></div></div>
       <div style="text-align:right"><b>${cop(p.total)}</b>
         ${pagoTotalHecho?`<div><span class="tag ${pagoTotalHecho}">Ya reportado · ${pagoTotalHecho}</span></div>`:''}</div>
     </div>`;
@@ -448,7 +488,8 @@ function renderPagos(){
         <div class="head"><span class="lbl">Cuota ${n}</span>${est?'':'<span class="dot"></span>'}</div>
         <b>${cop(v)}</b>
         ${i===0 && p.extra ? `<span class="nota">Incluye +${cop(p.extra)} manga larga</span>` : ''}
-        <span class="tag ${est||'Disponible'}">${est ? 'Ya reportado · '+est : 'Disponible'}</span>
+        <span class="fecha">📅 Hasta el ${FECHAS_PAGO[i].larga}</span>
+          <span class="tag ${est||'Disponible'}">${est ? 'Ya reportado · '+est : 'Disponible'}</span>
       </div>`;
     }).join('');
   }
@@ -462,8 +503,8 @@ function renderPagos(){
     const valor = state.pago === 'TOTAL' ? p.total : p.pagos[state.pago-1];
     const r = $('resumenSel');
     r.innerHTML = (state.pago === 'TOTAL'
-      ? `Vas a reportar el <b>pago total</b> por <b>${cop(valor)}</b>. Con este pago tu uniforme queda pago.`
-      : `Vas a reportar la <b>cuota ${state.pago}</b> por <b>${cop(valor)}</b>.`)
+      ? `Vas a reportar el <b>pago total</b> por <b>${cop(valor)}</b> (fecha límite: <b>${FECHA_TOTAL.larga}</b>). Con este pago tu uniforme queda pago.`
+      : `Vas a reportar la <b>cuota ${state.pago}</b> por <b>${cop(valor)}</b> (fecha límite: <b>${FECHAS_PAGO[state.pago-1].larga}</b>).`)
       + `<br><small style="color:var(--muted)">Transfiere este valor a Nequi / llave <b style="color:var(--txt)">3012648660</b> (paso 5).</small>`;
     r.style.display = 'block';
   });
@@ -610,11 +651,11 @@ $('btnConsultar').onclick = async () => {
     const esTotal = activos.some(x => x.numero === 'TOTAL');
     const meta = esTotal ? p.total : p.pagos.reduce((s,v)=>s+v,0);
     const pct = Math.min(100, Math.round(r.reportado / meta * 100));
-    const fila = (lbl, v, x) => `<tr><td>${lbl}</td><td>${cop(v)}</td><td>${x?x.fecha:'—'}</td>
+    const fila = (lbl, v, x, lim) => `<tr><td>${lbl}</td><td>${cop(v)}</td><td>${lim}</td><td>${x?x.fecha:'—'}</td>
       <td><span class="tag ${x?x.estado:'Disponible'}">${x?x.estado:'Sin reportar'}</span>${x&&x.obs?`<div style="font-size:12px;color:var(--muted);margin-top:4px">${x.obs}</div>`:''}</td></tr>`;
     const filas = esTotal
-      ? r.pagos.filter(x => x.numero === 'TOTAL').map(x => fila('Pago total', x.valor, x)).join('')
-      : p.pagos.map((v,i) => fila('Cuota '+(i+1), v, r.pagos.filter(x => x.numero === i+1).pop())).join('');
+      ? r.pagos.filter(x => x.numero === 'TOTAL').map(x => fila('Pago total', x.valor, x, FECHA_TOTAL.corta)).join('')
+      : p.pagos.map((v,i) => fila('Cuota '+(i+1), v, r.pagos.filter(x => x.numero === i+1).pop(), FECHAS_PAGO[i].corta)).join('');
     $('resConsulta').innerHTML = `
       <div style="margin-top:18px"><b style="font-size:18px">${r.nombre}</b>
       <div style="color:var(--muted);font-size:14px">${o.nombre} · ${r.genero} · Manga ${manga.toLowerCase()}${esTotal?' · Pago total':''}<br>
@@ -625,7 +666,7 @@ $('btnConsultar').onclick = async () => {
         <div class="kpi"><small>Por pagar</small><div style="color:var(--accent2)">${cop(r.saldo)}</div></div>
       </div>
       <div class="bar"><i id="barra"></i></div>
-      <table><thead><tr><th>Pago</th><th>Valor</th><th>Reportado</th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table>`;
+      <table><thead><tr><th>Pago</th><th>Valor</th><th>Fecha límite</th><th>Reportado</th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table>`;
     $('resConsulta').classList.remove('hidden');
     requestAnimationFrame(() => $('barra').style.width = pct + '%');
   }catch(ex){
