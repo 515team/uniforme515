@@ -11,7 +11,6 @@
     --bg:#0e0f12; --card:#17191e; --card2:#1f2229; --line:#2c3039;
     --txt:#f3f4f6; --muted:#9aa1ad; --accent:#ff5a1f; --accent2:#ffb020;
     --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; --nequi:#da0081; --r:16px;
-    --vino:#6d1a2c; --gris:#8a8f98;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;
@@ -65,7 +64,6 @@
   .opt .desc{display:inline-block;background:rgba(34,197,94,.15);color:var(--ok);font-size:11px;font-weight:700;
     padding:3px 8px;border-radius:999px;margin-left:6px;vertical-align:4px}
   .opt .plan{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.45}
-  /* Manga y color del jersey */
   .manga-tit{font-size:14px;font-weight:600;margin:18px 0 10px}
   .mangas,.colores{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .manga,.color{display:flex;align-items:center;gap:12px}
@@ -74,6 +72,18 @@
   .manga .extra{margin-left:auto;font-weight:800;color:var(--accent2);white-space:nowrap}
   .swatch{margin-left:auto;width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.25);flex-shrink:0;
     box-shadow:inset 0 -6px 10px rgba(0,0,0,.25)}
+  /* Jersey adicional */
+  .adicional{display:flex;align-items:center;gap:14px;border-style:dashed}
+  .adicional.sel{border-style:solid}
+  .adicional .chk{width:24px;height:24px;border-radius:7px;border:2px solid var(--muted);flex-shrink:0;display:grid;place-items:center;
+    font-size:15px;font-weight:800;color:#111}
+  .adicional.sel .chk{background:var(--accent);border-color:var(--accent)}
+  .adicional.sel .chk::after{content:'✓'}
+  .adicional b{display:block;font-size:15px}
+  .adicional small{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.4}
+  .adicional .der{margin-left:auto;text-align:right;display:flex;align-items:center;gap:10px}
+  .adicional .precio{font-weight:800;color:var(--accent2);white-space:nowrap}
+  .adicional.dis{opacity:.45;cursor:not-allowed}
   .generos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
   .genero{display:flex;align-items:center;gap:12px;font-weight:600;font-size:16px}
   .genero .ico{font-size:22px}
@@ -82,8 +92,9 @@
   .pago .head{display:flex;align-items:center;justify-content:space-between}
   .pago .lbl{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
   .pago b{font-size:22px}
-  .pago .nota{font-size:11px;color:var(--accent2)}
+  .pago .nota{font-size:11px;color:var(--accent2);line-height:1.35}
   .pago.done{opacity:.5;cursor:not-allowed}
+  .pago.bloq{opacity:.45;cursor:not-allowed;border-style:dashed}
   .pago.total{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;
     border-style:dashed;background:linear-gradient(90deg,rgba(255,90,31,.06),rgba(255,176,32,.06))}
   .pago.total.sel{border-style:solid}
@@ -94,25 +105,22 @@
     text-transform:uppercase;letter-spacing:.08em}
   .separador::before,.separador::after{content:'';flex:1;height:1px;background:var(--line)}
   .vacio{border:2px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--muted);font-size:14px}
-  /* Calendario de pagos (compacto) */
   .calendario{background:linear-gradient(135deg,rgba(255,90,31,.08),rgba(255,176,32,.05));border:1px solid rgba(255,176,32,.25);
     border-radius:12px;padding:10px 12px;margin-bottom:14px}
   .calendario .cal-tit{display:flex;align-items:center;gap:6px;font-weight:600;font-size:12px;color:var(--muted);
     text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
   .cal-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .cal-step{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:6px 8px;
-    display:flex;align-items:center;gap:8px}
+  .cal-step{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:6px 8px;display:flex;align-items:center;gap:8px}
   .cal-step .num{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;flex-shrink:0;
     background:linear-gradient(90deg,var(--accent),var(--accent2));color:#111;font-weight:800;font-size:10px}
   .cal-step .dia{font-size:12px;font-weight:700;color:var(--txt);line-height:1.2}
   .cal-step .monto{font-size:11px;color:var(--accent2);font-weight:600}
   .cal-nota{font-size:11px;color:#ffd58a;margin-top:8px;line-height:1.4}
   .pago .fecha{font-size:10.5px;color:var(--muted);align-self:flex-start}
-  /* Datos de pago Nequi */
   .nequi{background:linear-gradient(135deg,rgba(218,0,129,.18),rgba(32,0,60,.35));border:1px solid rgba(218,0,129,.5);
     border-radius:14px;padding:16px;margin-bottom:16px}
   .nequi .tit{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:12px}
-  .nequi .logo-n{background:var(--nequi);color:#fff;font-weight:800;border-radius:8px;padding:4px 10px;font-size:14px;letter-spacing:.02em}
+  .nequi .logo-n{background:var(--nequi);color:#fff;font-weight:800;border-radius:8px;padding:4px 10px;font-size:14px}
   .nequi .dato{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(0,0,0,.25);
     border-radius:10px;padding:10px 12px;margin-top:8px}
   .nequi .dato small{color:#f3c4e2;font-size:12px;display:block}
@@ -126,6 +134,7 @@
   .tag.Verificado{background:rgba(34,197,94,.15);color:var(--ok)}
   .tag.Rechazado{background:rgba(239,68,68,.15);color:var(--bad)}
   .tag.Disponible{background:rgba(255,255,255,.07);color:var(--muted)}
+  .tag.Bloqueada{background:rgba(255,255,255,.04);color:var(--muted);border:1px dashed var(--line)}
   .drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;cursor:pointer;color:var(--muted);transition:.2s}
   .drop:hover,.drop.over{border-color:var(--accent);color:var(--txt)}
   .drop input{display:none}
@@ -159,17 +168,14 @@
   .check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:4px 0 16px}
   .check input{width:auto;margin-top:2px}
   .terminos .ver{font-size:12px;opacity:.7}
-  /* Términos: botón desplegable (no parece casilla) */
   .tyc-box{background:var(--card2);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
-  .tyc-box summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
-    padding:12px 14px;font-weight:600;font-size:14px;user-select:none}
+  .tyc-box summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 14px;font-weight:600;font-size:14px;user-select:none}
   .tyc-box summary::-webkit-details-marker{display:none}
   .tyc-box summary .tyc-ico{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;
     background:linear-gradient(135deg,rgba(255,90,31,.25),rgba(255,176,32,.2));color:var(--accent2)}
   .tyc-box summary .tyc-txt small{display:block;font-weight:400;font-size:12px;color:var(--muted);margin-top:1px}
   .tyc-box summary .chev{margin-left:auto;color:var(--muted);transition:transform .25s;display:grid;place-items:center}
-  .tyc-box summary:hover{color:var(--accent2)}
-  .tyc-box summary:hover .chev{color:var(--accent2)}
+  .tyc-box summary:hover,.tyc-box summary:hover .chev{color:var(--accent2)}
   .tyc-box[open] .chev{transform:rotate(180deg)}
   .tyc-box[open] summary{border-bottom:1px solid var(--line)}
   .tyc-box .lbl-cerrar{display:none}
@@ -184,7 +190,8 @@
   .loader{display:inline-block;width:16px;height:16px;border:2px solid #111;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:8px}
   @keyframes spin{to{transform:rotate(360deg)}}
   @media(max-width:600px){.grid,.opts,.grid3,.mangas,.colores{grid-template-columns:1fr}.kpi div{font-size:15px}
-    .cal-steps{grid-template-columns:repeat(3,1fr);gap:6px}.cal-step{flex-direction:column;align-items:flex-start;gap:2px}}
+    .cal-step{flex-direction:column;align-items:flex-start;gap:2px}.cal-steps{gap:6px}
+    .adicional{flex-wrap:wrap}.adicional .der{width:100%;justify-content:flex-end}}
 </style>
 </head>
 <body>
@@ -226,6 +233,12 @@
       <div class="colores" id="colores"></div>
       <div class="manga-tit">Manga del jersey</div>
       <div class="mangas" id="mangas"></div>
+      <div class="manga-tit">¿Quieres un jersey adicional?</div>
+      <div class="sel-card adicional" id="adicional" role="checkbox" tabindex="0">
+        <span class="chk"></span>
+        <div><b>Jersey adicional</b><small id="adicionalTxt">Primero elige tu opción de compra y el color del jersey.</small></div>
+        <div class="der"><span class="swatch hidden" id="adicionalSwatch"></span><span class="precio">+<span class="precioAdic">$220.000</span></span></div>
+      </div>
     </div>
     <div class="card">
       <h2><span class="n">3</span>Género y tallas</h2>
@@ -235,6 +248,7 @@
         <div><label>Talla jersey *</label><select id="tallaJersey"></select></div>
         <div id="wrapBadana"><label>Talla badana *</label><select id="tallaBadana"></select></div>
         <div><label>Talla medias *</label><select id="tallaMedias"></select></div>
+        <div id="wrapJersey2" class="hidden"><label id="lblJersey2">Talla jersey adicional *</label><select id="tallaJersey2"></select></div>
       </div>
     </div>
     <div class="card">
@@ -288,11 +302,13 @@
           <li><b>Garantías y reclamos.</b> Cualquier reclamo por garantía, defectos de fabricación o diferencias en tallas debe gestionarse directamente con Suarez Clothing, según sus políticas.</li>
           <li><b>Precios y cantidad mínima.</b> Los precios publicados incluyen IVA y se mantienen solo si se alcanza un pedido mínimo de <span class="minimo">50</span> unidades de cada prenda. Si no se alcanza, los precios pueden variar.</li>
           <li><b>Plan de cuotas.</b> Uniforme completo: $220.000 + $175.000 + $175.000. Jersey + Medias: 50% ($127.500) + 25% ($63.750) + 25% ($63.750).</li>
+          <li><b>Orden de los pagos.</b> Las cuotas se pagan en orden: la cuota 2 solo se puede reportar después de la cuota 1, y la cuota 3 después de la cuota 2. Si un pago es rechazado, debes reportarlo de nuevo antes de continuar.</li>
           <li><b>Fechas de pago.</b> Primer pago hasta el <b>30 de noviembre</b>, segundo pago hasta el <b>15 de diciembre</b> y tercer pago hasta el <b>15 de enero</b>. El pago total de una sola vez debe hacerse hasta el <b>30 de noviembre</b>.</li>
-          <li><b>Jersey manga larga.</b> Tiene un valor adicional de <span class="extraTxt">$20.000</span>. Si pagas en cuotas, este valor se suma a la primera cuota; si haces pago total, se incluye en ese pago.</li>
+          <li><b>Jersey manga larga.</b> Tiene un valor adicional de <span class="extraTxt">$20.000</span> por cada jersey. Si pagas en cuotas, este valor se suma a la primera cuota; si haces pago total, se incluye en ese pago.</li>
           <li><b>Colores del jersey.</b> El jersey se produce en <b>Vinotinto</b> o <b>Gris</b>. Los tonos que ves en pantalla son una referencia y el color final depende de Suarez Clothing.</li>
+          <li><b>Jersey adicional.</b> Puedes agregar un segundo jersey por <span class="precioAdic">$220.000</span>, que se produce en el color que no escogiste para el primero y con el mismo tipo de manga. En cuotas se reparte 50% / 25% / 25% (<span id="tycAdicCuotas">$110.000 + $55.000 + $55.000</span>).</li>
           <li><b>Formas de pago.</b> Los pagos se hacen por Nequi o con la llave <b>3012648660</b>. Puedes pagar en cuotas o hacer un pago total de una sola vez. El uniforme se entrega solo cuando el valor total esté pagado.</li>
-          <li><b>Tallas y opciones.</b> La talla, el color, el tipo de manga y la opción de compra son responsabilidad de quien compra. Una vez enviado el pedido a producción, no se aceptan cambios.</li>
+          <li><b>Tallas y opciones.</b> La talla, el color, el tipo de manga, el jersey adicional y la opción de compra son responsabilidad de quien compra. Una vez enviado el pedido a producción, no se aceptan cambios.</li>
           <li><b>Verificación de pagos.</b> Cada pago queda <i>Pendiente</i> hasta que la administración verifique el soporte.</li>
           <li><b>Datos personales.</b> Tus datos se usan únicamente para gestionar el pedido, los pagos y la entrega del uniforme.</li>
         </ol>
@@ -320,7 +336,7 @@
 <script>
 /* ====== CONFIGURA AQUÍ LA URL DE TU APPS SCRIPT (termina en /exec) ====== */
 const API_URL = 'https://script.google.com/macros/s/AKfycbyx9LVfHAcbe59r1vZibh6lK_jGYnH2t8AFWjdEl7b5EJiIFmbyRJKXxaWgGdYbLrJG/exec';
-const TYC_VERSION = 'v7-2026-11';
+const TYC_VERSION = 'v8-2026-11';
 let CFG = {
   opciones:{
     COMPLETO:{nombre:'Uniforme completo',detalle:'Jersey Performance + Badana Pro + Medias',
@@ -332,14 +348,15 @@ let CFG = {
   },
   generos:['Hombre','Mujer'],
   tallas:['XS','S','M','L','XL','XXL'], tallasMedias:['S-M','L-XL'],
-  mangaLargaExtra:20000, maxMb:5, minimo:50
+  mangaLargaExtra:20000, maxMb:5, minimo:50,
+  adicional:{ precio:220000, pagos:[110000,55000,55000] }   // Jersey adicional: 50% + 25% + 25%
 };
-/* ====== COLORES DEL JERSEY (edita aquí si cambian) ====== */
+/* ====== COLORES DEL JERSEY ====== */
 const COLORES = [
   { nombre:'Vinotinto', hex:'#6d1a2c' },
   { nombre:'Gris',      hex:'#8a8f98' }
 ];
-/* ====== FECHAS LÍMITE DE PAGO (edita aquí si cambian) ====== */
+/* ====== FECHAS LÍMITE DE PAGO ====== */
 const FECHAS_PAGO = [
   { corta:'30 nov', larga:'30 de noviembre' },
   { corta:'15 dic', larga:'15 de diciembre' },
@@ -349,14 +366,23 @@ const FECHA_TOTAL = FECHAS_PAGO[0];
 const ICONO_GENERO = { Hombre:'♂', Mujer:'♀' };
 const $ = id => document.getElementById(id);
 const cop = n => '$' + Number(n||0).toLocaleString('es-CO');
-const state = { opcion:null, manga:'Corta', color:null, genero:null, pago:null, archivo:null, existente:null };
+const state = { opcion:null, manga:'Corta', color:null, adicional:false, genero:null, pago:null, archivo:null, existente:null };
 const etiquetaPago = p => p === 'TOTAL' ? 'Pago total' : 'Cuota ' + p;
-/** Plan de pagos real según opción y manga: el extra de manga larga va en la cuota 1 y en el total. */
-function plan(k, manga){
+const otroColor = c => { const o = COLORES.find(x => x.nombre !== c); return o ? o.nombre : ''; };
+const hexDe = c => (COLORES.find(x => x.nombre === c) || {}).hex || '#555';
+
+/** Plan de pagos real: opción + jersey adicional (50/25/25) + manga larga por jersey en la cuota 1. */
+function plan(k, manga, adicional){
   const o = CFG.opciones[k]; if (!o) return null;
-  const extra = manga === 'Larga' ? CFG.mangaLargaExtra : 0;
-  return { total: o.total + extra, pagos: o.pagos.map((v,i) => i === 0 ? v + extra : v), extra };
+  const A = CFG.adicional, nJ = adicional ? 2 : 1;
+  const extra = manga === 'Larga' ? CFG.mangaLargaExtra * nJ : 0;
+  return {
+    total: o.total + (adicional ? A.precio : 0) + extra,
+    pagos: o.pagos.map((v,i) => v + (adicional ? A.pagos[i] : 0) + (i === 0 ? extra : 0)),
+    extra, adicional
+  };
 }
+
 document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active');
@@ -364,6 +390,7 @@ document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
   $('formRegistro').classList.toggle('hidden', !reg);
   $('secConsulta').classList.toggle('hidden', reg);
 });
+
 /* ---------- Opciones de compra ---------- */
 function renderOpciones(){
   $('opciones').innerHTML = Object.entries(CFG.opciones).map(([k,o]) => {
@@ -385,9 +412,10 @@ function seleccionarOpcion(k){
   state.opcion = k; state.pago = null;
   document.querySelectorAll('.opt').forEach(el => el.classList.toggle('sel', el.dataset.k === k));
   $('wrapBadana').classList.toggle('hidden', k !== 'COMPLETO');
-  renderPagos();
+  renderAdicional(); renderPagos();
 }
-/* ---------- Color del jersey ---------- */
+
+/* ---------- Color ---------- */
 function renderColores(){
   $('colores').innerHTML = COLORES.map(c => `
     <div class="sel-card color" data-c="${c.nombre}" role="radio" tabindex="0">
@@ -403,7 +431,9 @@ function renderColores(){
 function seleccionarColor(c){
   state.color = c;
   document.querySelectorAll('.color').forEach(el => el.classList.toggle('sel', el.dataset.c === c));
+  renderAdicional();
 }
+
 /* ---------- Manga ---------- */
 function renderMangas(){
   const ex = CFG.mangaLargaExtra;
@@ -412,7 +442,7 @@ function renderMangas(){
       <span class="dot"></span><div><b>Manga corta</b><small>Incluida en el precio</small></div><span class="extra">$0</span>
     </div>
     <div class="sel-card manga" data-m="Larga" role="radio" tabindex="0">
-      <span class="dot"></span><div><b>Manga larga</b><small>Se suma a la 1ª cuota o al pago total</small></div><span class="extra">+${cop(ex)}</span>
+      <span class="dot"></span><div><b>Manga larga</b><small>Por jersey · se suma a la 1ª cuota o al pago total</small></div><span class="extra">+${cop(ex)}</span>
     </div>`;
   document.querySelectorAll('.manga').forEach(el => el.onclick = () => {
     if (el.classList.contains('lock')) return;
@@ -424,8 +454,37 @@ function renderMangas(){
 function seleccionarManga(m){
   state.manga = m; state.pago = null;
   document.querySelectorAll('.manga').forEach(el => el.classList.toggle('sel', el.dataset.m === m));
-  renderPagos();
+  renderAdicional(); renderPagos();
 }
+
+/* ---------- Jersey adicional ---------- */
+function renderAdicional(){
+  const A = CFG.adicional, el = $('adicional');
+  document.querySelectorAll('.precioAdic').forEach(x => x.textContent = cop(A.precio));
+  $('tycAdicCuotas').textContent = A.pagos.map(cop).join(' + ');
+  const listo = state.opcion && state.color;
+  el.classList.toggle('dis', !listo && !state.adicional);
+  el.classList.toggle('sel', state.adicional);
+  const c2 = otroColor(state.color);
+  if (!listo) {
+    $('adicionalTxt').textContent = 'Primero elige tu opción de compra y el color del jersey.';
+    $('adicionalSwatch').classList.add('hidden');
+  } else {
+    $('adicionalTxt').innerHTML = `Segundo Jersey Performance en <b style="display:inline;font-size:12px;color:var(--txt)">${c2}</b> (el color que no escogiste), manga ${state.manga.toLowerCase()}${state.manga==='Larga'?' (+'+cop(CFG.mangaLargaExtra)+')':''}.<br>En cuotas: ${A.pagos.map(cop).join(' + ')}`;
+    $('adicionalSwatch').style.background = hexDe(c2);
+    $('adicionalSwatch').classList.remove('hidden');
+  }
+  $('wrapJersey2').classList.toggle('hidden', !state.adicional);
+  $('lblJersey2').textContent = `Talla jersey adicional${c2 && state.color ? ' (' + c2 + ')' : ''} *`;
+}
+$('adicional').onclick = () => {
+  const el = $('adicional');
+  if (el.classList.contains('lock') || el.classList.contains('dis')) return;
+  state.adicional = !state.adicional; state.pago = null;
+  if (!state.adicional) $('tallaJersey2').value = '';
+  renderAdicional(); renderPagos();
+};
+
 /* ---------- Género y tallas ---------- */
 function renderGeneros(){
   $('generos').innerHTML = CFG.generos.map(g => `
@@ -443,26 +502,28 @@ function seleccionarGenero(g){
 }
 function renderTallas(){
   const opts = l => '<option value="">Selecciona</option>' + l.map(t=>`<option>${t}</option>`).join('');
-  ['tallaJersey','tallaBadana'].forEach(id => $(id).innerHTML = opts(CFG.tallas));
+  ['tallaJersey','tallaBadana','tallaJersey2'].forEach(id => $(id).innerHTML = opts(CFG.tallas));
   $('tallaMedias').innerHTML = opts(CFG.tallasMedias || ['S-M','L-XL']);
 }
-/* ---------- Calendario de pagos (compacto) ---------- */
+
+/* ---------- Calendario ---------- */
 function renderCalendario(){
-  const p = plan(state.opcion, state.manga);
+  const p = plan(state.opcion, state.manga, state.adicional);
   $('calendario').innerHTML = `
-    <div class="cal-tit">📅 Fechas de pago</div>
+    <div class="cal-tit">📅 Fechas de pago · en orden</div>
     <div class="cal-steps">
       ${FECHAS_PAGO.map((f,i) => `<div class="cal-step">
         <span class="num">${i+1}</span>
         <div><div class="dia">${f.corta}</div>${p ? `<div class="monto">${cop(p.pagos[i])}</div>` : ''}</div>
       </div>`).join('')}
     </div>
-    <div class="cal-nota">Pago total${p?' ('+cop(p.total)+')':''}: hasta el ${FECHA_TOTAL.corta}.</div>`;
+    <div class="cal-nota">Pago total${p?' ('+cop(p.total)+')':''}: hasta el ${FECHA_TOTAL.corta}. Las cuotas se reportan en orden: 1 → 2 → 3.</div>`;
 }
-/* ---------- Pagos ---------- */
+
+/* ---------- Pagos (con orden obligatorio) ---------- */
 function renderPagos(){
   const o = CFG.opciones[state.opcion];
-  const p = plan(state.opcion, state.manga);
+  const p = plan(state.opcion, state.manga, state.adicional);
   renderCalendario();
   $('resumenSel').style.display = 'none';
   if(!o){
@@ -475,12 +536,16 @@ function renderPagos(){
   activos.forEach(x => reportados[x.numero] = x.estado);
   const pagoTotalHecho = reportados['TOTAL'];
   const yaInicioCuotas = activos.some(x => x.numero !== 'TOTAL');
-  $('subPagos').textContent = `${o.nombre}${state.manga==='Larga'?' · manga larga':''}: paga el total de una vez o elige la cuota que corresponde a tu comprobante.`;
+  const extras = [];
+  if (state.adicional) extras.push('jersey adicional');
+  if (state.manga === 'Larga') extras.push('manga larga');
+  $('subPagos').textContent = `${o.nombre}${extras.length ? ' + ' + extras.join(' + ') : ''}: paga el total de una vez o la cuota que sigue.`;
+
   let html = '';
   if (!yaInicioCuotas) {
     html += `<div class="sel-card pago total ${pagoTotalHecho?'done':''}" data-n="TOTAL" role="radio" tabindex="0">
       <div class="izq">${pagoTotalHecho?'':'<span class="dot"></span>'}
-        <div><span class="lbl">Pago total · una sola vez</span><small>Pagas todo el uniforme en un solo pago${p.extra?' (incluye manga larga)':''}</small><small class="lim">Hasta el ${FECHA_TOTAL.corta}</small></div></div>
+        <div><span class="lbl">Pago total · una sola vez</span><small>Pagas todo en un solo pago${extras.length?' (incluye '+extras.join(' y ')+')':''}</small><small class="lim">Hasta el ${FECHA_TOTAL.corta}</small></div></div>
       <div style="text-align:right"><b>${cop(p.total)}</b>
         ${pagoTotalHecho?`<div><span class="tag ${pagoTotalHecho}">Ya reportado · ${pagoTotalHecho}</span></div>`:''}</div>
     </div>`;
@@ -489,25 +554,33 @@ function renderPagos(){
     if (!yaInicioCuotas) html += '<div class="separador">o paga en cuotas</div>';
     html += p.pagos.map((v,i) => {
       const n = i+1, est = reportados[n];
-      return `<div class="sel-card pago ${est?'done':''}" data-n="${n}" role="radio" tabindex="0">
-        <div class="head"><span class="lbl">Cuota ${n}</span>${est?'':'<span class="dot"></span>'}</div>
+      const bloq = !est && n > 1 && !reportados[n-1];
+      const notas = [];
+      if (i === 0 && p.extra) notas.push(`Incluye +${cop(p.extra)} manga larga`);
+      if (p.adicional) notas.push(`Incluye ${cop(CFG.adicional.pagos[i])} jersey adicional`);
+      return `<div class="sel-card pago ${est?'done':''} ${bloq?'bloq':''}" data-n="${n}" role="radio" tabindex="0">
+        <div class="head"><span class="lbl">Cuota ${n}</span>${est||bloq?(bloq?'🔒':''):'<span class="dot"></span>'}</div>
         <b>${cop(v)}</b>
-        ${i===0 && p.extra ? `<span class="nota">Incluye +${cop(p.extra)} manga larga</span>` : ''}
+        ${notas.map(t => `<span class="nota">${t}</span>`).join('')}
         <span class="fecha">Hasta el ${FECHAS_PAGO[i].corta}</span>
-        <span class="tag ${est||'Disponible'}">${est ? 'Ya reportado · '+est : 'Disponible'}</span>
+        <span class="tag ${est||(bloq?'Bloqueada':'Disponible')}">${est ? 'Ya reportado · '+est : bloq ? 'Primero la cuota '+(n-1) : 'Disponible'}</span>
       </div>`;
     }).join('');
   }
   $('pagos').innerHTML = html;
   document.querySelectorAll('.pago').forEach(el => el.onclick = () => {
     if (el.classList.contains('done')) return;
+    if (el.classList.contains('bloq')) {
+      const n = Number(el.dataset.n);
+      return msg('msgPagoTmp', 'err', `Para pagar la cuota ${n} primero debes reportar la cuota ${n-1}.`);
+    }
     const n = el.dataset.n;
     state.pago = n === 'TOTAL' ? 'TOTAL' : Number(n);
     document.querySelectorAll('.pago').forEach(x => x.classList.toggle('sel', x === el));
     const valor = state.pago === 'TOTAL' ? p.total : p.pagos[state.pago-1];
     const r = $('resumenSel');
     r.innerHTML = (state.pago === 'TOTAL'
-      ? `Vas a reportar el <b>pago total</b> por <b>${cop(valor)}</b> (fecha límite: ${FECHA_TOTAL.corta}). Con este pago tu uniforme queda pago.`
+      ? `Vas a reportar el <b>pago total</b> por <b>${cop(valor)}</b> (fecha límite: ${FECHA_TOTAL.corta}). Con este pago tu pedido queda pago.`
       : `Vas a reportar la <b>cuota ${state.pago}</b> por <b>${cop(valor)}</b> (fecha límite: ${FECHAS_PAGO[state.pago-1].corta}).`)
       + `<br><small style="color:var(--muted)">Transfiere este valor a Nequi / llave <b style="color:var(--txt)">3012648660</b> (paso 5).</small>`;
     r.style.display = 'block';
@@ -516,6 +589,7 @@ function renderPagos(){
 document.addEventListener('keydown', e => {
   if ((e.key==='Enter'||e.key===' ') && e.target.classList && e.target.classList.contains('sel-card')) { e.preventDefault(); e.target.click(); }
 });
+
 /* ---------- Copiar llave ---------- */
 $('btnCopiar').onclick = async () => {
   const t = $('llave').textContent.trim();
@@ -524,6 +598,7 @@ $('btnCopiar').onclick = async () => {
   const b = $('btnCopiar'); b.textContent = '¡Copiado!'; b.classList.add('ok');
   setTimeout(() => { b.textContent = 'Copiar'; b.classList.remove('ok'); }, 1800);
 };
+
 /* ---------- Usuario existente ---------- */
 let timer;
 $('cedula').addEventListener('input', () => {
@@ -545,36 +620,41 @@ async function buscarExistente(c){
     document.querySelectorAll('.opt').forEach(el => el.classList.toggle('lock', el.dataset.k !== r.opcion));
     document.querySelectorAll('.genero').forEach(el => el.classList.toggle('lock', el.dataset.g !== r.genero));
     document.querySelectorAll('.manga').forEach(el => el.classList.toggle('lock', el.dataset.m !== manga));
-    // Color: si ya lo tiene registrado, queda fijo; si es un registro antiguo sin color, puede elegirlo
     if (r.color) {
       document.querySelectorAll('.color').forEach(el => el.classList.toggle('lock', el.dataset.c !== r.color));
-      seleccionarColor(r.color);
+      state.color = r.color;
+      document.querySelectorAll('.color').forEach(el => el.classList.toggle('sel', el.dataset.c === r.color));
     }
-    state.opcion = r.opcion; state.manga = manga;
+    // El jersey adicional queda como se registró la primera vez
+    state.opcion = r.opcion; state.manga = manga; state.adicional = !!r.adicional;
+    $('adicional').classList.add('lock');
     document.querySelectorAll('.opt').forEach(el => el.classList.toggle('sel', el.dataset.k === r.opcion));
     document.querySelectorAll('.manga').forEach(el => el.classList.toggle('sel', el.dataset.m === manga));
     $('wrapBadana').classList.toggle('hidden', r.opcion !== 'COMPLETO');
     seleccionarGenero(r.genero);
-    renderPagos();
+    renderAdicional(); renderPagos();
     $('tallaJersey').value = r.tallas.jersey; $('tallaBadana').value = r.tallas.badana; $('tallaMedias').value = r.tallas.medias;
-    ['tallaJersey','tallaBadana','tallaMedias'].forEach(id => $(id).disabled = true);
+    $('tallaJersey2').value = r.tallas.jerseyAdicional || '';
+    ['tallaJersey','tallaBadana','tallaMedias','tallaJersey2'].forEach(id => $(id).disabled = true);
     const info = $('infoExistente');
     info.style.display = 'block';
     const nom = String(r.nombre).split(' ')[0];
-    const detalle = `${r.genero}, ${r.color ? 'color '+r.color.toLowerCase()+', ' : ''}manga ${manga.toLowerCase()}`;
+    const detalle = `${r.genero}, ${r.color ? 'color '+r.color.toLowerCase()+', ' : ''}manga ${manga.toLowerCase()}${r.adicional ? ', + jersey adicional '+(r.colorAdicional||'').toLowerCase() : ''}`;
+    const sig = (r.disponibles || []).filter(x => x !== 'TOTAL')[0];
     info.innerHTML = r.saldo > 0
-      ? `👋 Hola <b>${nom}</b>, ya tienes registrado <b>${CFG.opciones[r.opcion].nombre}</b> (${detalle}). Llevas ${cop(r.reportado)} reportados y te faltan ${cop(r.saldo)}.${r.color ? '' : '<br>🎨 Elige el color de tu jersey en el paso 2.'}`
+      ? `👋 Hola <b>${nom}</b>, ya tienes registrado <b>${CFG.opciones[r.opcion].nombre}</b> (${detalle}). Llevas ${cop(r.reportado)} reportados y te faltan ${cop(r.saldo)}.${sig ? ' Tu siguiente pago es la <b>cuota '+sig+'</b>.' : ''}${r.color ? '' : '<br>🎨 Elige el color de tu jersey en el paso 2.'}`
       : `✅ <b>${nom}</b>, ya reportaste todos tus pagos. Consulta su estado en "Consultar mis pagos".`;
   }catch(e){}
 }
 function limpiarExistente(){
   if (!state.existente) return;
   state.existente = null;
-  ['nombre','celular','correo','tallaJersey','tallaBadana','tallaMedias'].forEach(id => { $(id).disabled=false; });
-  document.querySelectorAll('.opt,.genero,.manga,.color').forEach(el => el.classList.remove('lock'));
+  ['nombre','celular','correo','tallaJersey','tallaBadana','tallaMedias','tallaJersey2'].forEach(id => { $(id).disabled=false; });
+  document.querySelectorAll('.opt,.genero,.manga,.color,#adicional').forEach(el => el.classList.remove('lock'));
   $('infoExistente').style.display = 'none';
-  renderPagos();
+  renderAdicional(); renderPagos();
 }
+
 /* ---------- Archivo ---------- */
 const drop = $('drop');
 ['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
@@ -594,6 +674,7 @@ function setArchivo(f){
   $('msgRegistro').style.display = 'none';
 }
 const toBase64 = f => new Promise((ok,ko) => { const r = new FileReader(); r.onload = () => ok(r.result.split(',')[1]); r.onerror = ko; r.readAsDataURL(f); });
+
 /* ---------- Envío ---------- */
 $('formRegistro').addEventListener('submit', async e => {
   e.preventDefault();
@@ -601,6 +682,7 @@ $('formRegistro').addEventListener('submit', async e => {
     cedula:$('cedula').value.trim(), nombre:$('nombre').value.trim().replace(/\s+/g,' '),
     celular:$('celular').value.replace(/\D/g,''), correo:$('correo').value.trim(),
     opcion:state.opcion, manga:state.manga, color:state.color, genero:state.genero, numeroPago:state.pago,
+    jerseyAdicional:state.adicional, tallaJerseyAdicional:$('tallaJersey2').value,
     tallaJersey:$('tallaJersey').value, tallaBadana:$('tallaBadana').value, tallaMedias:$('tallaMedias').value,
     aceptaTyC:$('acepto').checked, versionTyC:TYC_VERSION
   };
@@ -612,6 +694,7 @@ $('formRegistro').addEventListener('submit', async e => {
     !d.color ? 'Selecciona el color del jersey: Vinotinto o Gris (paso 2).' :
     !d.genero ? 'Selecciona Hombre o Mujer (paso 3).' :
     (!d.tallaJersey || !d.tallaMedias || (d.opcion==='COMPLETO' && !d.tallaBadana)) ? 'Selecciona tus tallas (paso 3).' :
+    (d.jerseyAdicional && !d.tallaJerseyAdicional) ? 'Selecciona la talla del jersey adicional (paso 3).' :
     !d.numeroPago ? 'Selecciona el pago que vas a hacer (paso 4).' :
     !state.archivo ? 'Adjunta el soporte de pago (paso 5).' :
     !$('acepto').checked ? 'Debes aceptar los términos y condiciones (paso 6).' : '';
@@ -634,12 +717,13 @@ $('formRegistro').addEventListener('submit', async e => {
 });
 function resetForm(){
   $('formRegistro').reset(); $('quitar').click(); limpiarExistente();
-  state.opcion = null; state.genero = null; state.pago = null; state.color = null;
+  state.opcion = null; state.genero = null; state.pago = null; state.color = null; state.adicional = false;
   document.querySelectorAll('.opt,.genero,.color').forEach(el => el.classList.remove('sel'));
   $('wrapBadana').classList.remove('hidden');
   $('subPagos').textContent = 'Toca el pago que corresponde al comprobante que vas a adjuntar.';
   seleccionarManga('Corta');
 }
+
 /* ---------- Consulta ---------- */
 $('cedulaConsulta').addEventListener('keydown', e => e.key === 'Enter' && $('btnConsultar').click());
 $('btnConsultar').onclick = async () => {
@@ -653,10 +737,10 @@ $('btnConsultar').onclick = async () => {
     if (!r.existe) return msg('msgConsulta','err','No encontramos pagos registrados con esa cédula.');
     const o = CFG.opciones[r.opcion];
     const manga = r.manga === 'Larga' ? 'Larga' : 'Corta';
-    const p = plan(r.opcion, manga);
+    const p = plan(r.opcion, manga, !!r.adicional);
     const activos = r.pagos.filter(x => x.estado !== 'Rechazado');
     const esTotal = activos.some(x => x.numero === 'TOTAL');
-    const meta = esTotal ? p.total : p.pagos.reduce((s,v)=>s+v,0);
+    const meta = p.total;
     const pct = Math.min(100, Math.round(r.reportado / meta * 100));
     const fila = (lbl, v, x, lim) => `<tr><td>${lbl}</td><td>${cop(v)}</td><td>${lim}</td><td>${x?x.fecha:'—'}</td>
       <td><span class="tag ${x?x.estado:'Disponible'}">${x?x.estado:'Sin reportar'}</span>${x&&x.obs?`<div style="font-size:12px;color:var(--muted);margin-top:4px">${x.obs}</div>`:''}</td></tr>`;
@@ -666,7 +750,8 @@ $('btnConsultar').onclick = async () => {
     $('resConsulta').innerHTML = `
       <div style="margin-top:18px"><b style="font-size:18px">${r.nombre}</b>
       <div style="color:var(--muted);font-size:14px">${o.nombre} · ${r.genero}${r.color?' · '+r.color:''} · Manga ${manga.toLowerCase()}${esTotal?' · Pago total':''}<br>
-      Tallas: Jersey ${r.tallas.jersey}${r.opcion==='COMPLETO'?' · Badana '+r.tallas.badana:''} · Medias ${r.tallas.medias}</div></div>
+      Tallas: Jersey ${r.tallas.jersey}${r.opcion==='COMPLETO'?' · Badana '+r.tallas.badana:''} · Medias ${r.tallas.medias}
+      ${r.adicional ? `<br>+ Jersey adicional ${r.colorAdicional||''} · Talla ${r.tallas.jerseyAdicional||'—'}` : ''}</div></div>
       <div class="resumen">
         <div class="kpi"><small>Reportado</small><div>${cop(r.reportado)}</div></div>
         <div class="kpi"><small>Verificado</small><div style="color:var(--ok)">${cop(r.verificado)}</div></div>
@@ -680,8 +765,8 @@ $('btnConsultar').onclick = async () => {
     msg('msgConsulta','err','Error al consultar: ' + ex.message);
   }finally{ btn.disabled = false; btn.textContent = 'Consultar'; }
 };
+
 /* ---------- Utilidades ---------- */
-/** Convierte la respuesta de Apps Script en JSON y explica el error si llega una página HTML. */
 function leerJSON(txt){
   try { return JSON.parse(txt); }
   catch(e){
@@ -701,6 +786,9 @@ async function api(action, params={}){
   return leerJSON(await res.text());
 }
 function msg(id, tipo, html){
+  if (id === 'msgPagoTmp') {          // aviso corto dentro del paso 4
+    const r = $('resumenSel'); r.innerHTML = '🔒 ' + html; r.style.display = 'block'; return;
+  }
   const el = $(id); el.className = 'msg ' + tipo; el.innerHTML = html; el.style.display = 'block';
   el.scrollIntoView({behavior:'smooth', block:'center'});
 }
@@ -708,7 +796,7 @@ function pintar(){
   $('maxMb').textContent = CFG.maxMb;
   $('tycVersion').textContent = TYC_VERSION;
   document.querySelectorAll('.minimo').forEach(el => el.textContent = CFG.minimo || 50);
-  renderOpciones(); renderColores(); renderGeneros(); renderTallas(); renderMangas();
+  renderOpciones(); renderColores(); renderGeneros(); renderTallas(); renderMangas(); renderAdicional();
 }
 pintar();
 (async () => {
@@ -717,7 +805,8 @@ pintar();
     const r = await api('config');
     if (r.ok){
       CFG = { opciones:r.opciones, generos:r.generos, tallas:r.tallas, tallasMedias:r.tallasMedias||['S-M','L-XL'],
-        mangaLargaExtra: r.mangaLargaExtra ?? 20000, maxMb:r.maxMb, minimo:r.minimo };
+        mangaLargaExtra: r.mangaLargaExtra ?? 20000, maxMb:r.maxMb, minimo:r.minimo,
+        adicional: r.adicional || CFG.adicional };
       pintar();
     }
   }catch(e){ console.warn('Usando configuración local'); }
